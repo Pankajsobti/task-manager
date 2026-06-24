@@ -1,6 +1,8 @@
 import 'dotenv/config';           // must be first — loads .env before anything else
 import app from './app.js';
 import connectDB from './config/db.js';
+import dns from 'dns';
+dns.setDefaultResultOrder('ipv4first');
 
 const PORT = process.env.PORT || 5000;
 
