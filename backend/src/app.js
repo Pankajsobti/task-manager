@@ -6,6 +6,7 @@ import authRoutes  from "./routes/auth.routes.js";
 import boardRoutes from "./routes/board.routes.js";
 import taskRoutes  from "./routes/task.routes.js";
 import aiRoutes    from "./routes/ai.routes.js";
+import analyticsRoutes from "./routes/analytics.routes.js";
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/api/auth",   authRoutes);
 app.use("/api/boards", boardRoutes);
 app.use("/api/tasks",  taskRoutes);
 app.use("/api/ai",     aiRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 // ─── Health check ────────────────────────────────────────
 app.get("/", (req, res) => {
