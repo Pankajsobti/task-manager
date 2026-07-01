@@ -2,6 +2,7 @@ import 'dotenv/config';           // must be first — loads .env before anythin
 import app from './app.js';
 import connectDB from './config/db.js';
 import dns from 'dns';
+import { startEmailReminderCron } from './utils/emailReminder.js'; // ADD
 dns.setDefaultResultOrder('ipv4first');
 
 const PORT = process.env.PORT || 5000;
@@ -12,6 +13,7 @@ const startServer = async () => {
 
     app.listen(PORT, () => {
       console.log(`🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+      startEmailReminderCron(); // ADD
     });
   } catch (err) {
     console.error('❌ Failed to start server:', err.message);
