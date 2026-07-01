@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 import axios from "../api/axios.js";
 import TaskDetailModal from "../components/TaskDetailModel.jsx";
 import AIChatbot from "../components/AIChatbot.jsx";
@@ -269,6 +270,54 @@ export default function BoardPage() {
   const [error, setError]               = useState("");
   const [selectedTask, setSelectedTask] = useState(null);
   const [showChatbot, setShowChatbot]   = useState(false);
+
+  const socketRef = useRef(null);
+
+  // Real-time sync via Socket.IO
+  useEffect(() => {
+    if (!boardId) return;
+
+    const SOCKET_URL = import.meta.env.VITE_API_URL?.replace(/\/api\/?$/, "");
+    const socket = io(SOCKET_URL, {
+      auth: { token: localStorage.getItem("token") },
+    });
+    socketRef.current = socket;
+    socket.on("connect_error", (err) => {
+     console.error("Socket connection failed:", err.message);
+    });
+
+    socket.emit("join-board", boardId);
+
+    socket.on("task:created", (task) => {
+      setTasks((prev) =>
+        prev.some((t) => t._id === task._id) ? prev : [...prev, task]
+      );
+    });
+
+    socket.on("task:updated", (task) => {
+      setTasks((prev) =>
+        prev.map((t) => (t._id === task._id ? { ...t, ...task } : t))
+      );
+    });
+
+    socket.on("task:moved", (task) => {
+      setTasks((prev) =>
+        prev.map((t) => (t._id === task._id ? { ...t, ...task } : t))
+      );
+    });
+
+    socket.on("task:deleted", (payload) => {
+      const deletedId =
+        typeof payload === "string" ? payload : payload?._id ?? payload?.taskId;
+      if (!deletedId) return;
+      setTasks((prev) => prev.filter((t) => t._id !== deletedId));
+    });
+
+    return () => {
+      socket.disconnect();
+      socketRef.current = null;
+    };
+  }, [boardId]);
 
   // Fetch tasks
   useEffect(() => {

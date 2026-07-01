@@ -47,7 +47,7 @@ export const createTask = async (req, res) => {
       { path: "assignedTo", select: "email" },
       { path: "board", select: "title" },
     ]);
-
+    req.app.get("io").to(board).emit("task:created", task);   // ADD THIS LINE
     res.status(201).json({ success: true, data: task });
   } catch (err) {
     if (err.name === "ValidationError") {
@@ -120,6 +120,7 @@ export const updateTask = async (req, res) => {
     if (!access) {
       return res.status(403).json({ success: false, message: "Access denied" });
     }
+    const boardId = task.board.toString();   // ADD THIS LINE
 
     // Collect changes and build history entries
     const historyEntries = [];
@@ -166,6 +167,9 @@ export const updateTask = async (req, res) => {
       { path: "createdBy", select: "email" },
       { path: "board", select: "title" },
     ]);
+    const statusChanged = historyEntries.some((h) => h.changeType === "status");   // ADD
+    const eventName = statusChanged ? "task:moved" : "task:updated";               // ADD
+    req.app.get("io").to(boardId).emit(eventName, task);  
 
     res.json({ success: true, data: task });
   } catch (err) {
@@ -189,10 +193,13 @@ export const deleteTask = async (req, res) => {
     if (!access) {
       return res.status(403).json({ success: false, message: "Access denied" });
     }
+    const boardId = task.board.toString();   // ADD
+    const taskId = task._id.toString();      // ADD
 
     await task.deleteOne();
     // Optionally clean up history — remove if you want to keep audit trail
     await TaskHistory.deleteMany({ task: task._id });
+    req.app.get("io").to(boardId).emit("task:deleted", { taskId, boardId });   // ADD
 
     res.json({ success: true, message: "Task deleted successfully" });
   } catch {

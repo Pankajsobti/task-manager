@@ -13,8 +13,8 @@ const COLOR_OPTIONS = [
   { label: "Violet",  value: "#7C3AED" },
 ];
 
-// ✅ Added onDelete prop
-function BoardCard({ board, onClick, onDelete }) {
+// ✅ Added onDelete + onInvite + shared props
+function BoardCard({ board, onClick, onDelete, onInvite, shared = false }) {
   return (
     <button
       onClick={onClick}
@@ -25,6 +25,16 @@ function BoardCard({ board, onClick, onDelete }) {
         className="h-2 w-full"
         style={{ backgroundColor: board.color || "#4F46E5" }}
       />
+
+      {/* ✅ Shared badge */}
+      {shared && (
+        <span className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 text-[11px] font-semibold">
+          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-4-4" />
+          </svg>
+          Shared
+        </span>
+      )}
 
       <div className="p-5">
         {/* Color dot + title */}
@@ -48,17 +58,33 @@ function BoardCard({ board, onClick, onDelete }) {
           <span className="text-xs text-slate-400 font-medium">Open board</span>
 
           <div className="flex items-center gap-2">
-            {/* ✅ Delete button */}
-            <span
-              role="button"
-              onClick={onDelete}
-              title="Delete board"
-              className="p-1 rounded text-slate-300 hover:text-red-500 hover:bg-red-50 transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-            </span>
+            {/* ✅ Invite button — only shown for boards you own */}
+            {onInvite && (
+              <span
+                role="button"
+                onClick={onInvite}
+                title="Invite member"
+                className="p-1 rounded text-slate-300 hover:text-indigo-500 hover:bg-indigo-50 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                </svg>
+              </span>
+            )}
+
+            {/* ✅ Delete button — only shown for boards you own */}
+            {onDelete && (
+              <span
+                role="button"
+                onClick={onDelete}
+                title="Delete board"
+                className="p-1 rounded text-slate-300 hover:text-red-500 hover:bg-red-50 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </span>
+            )}
 
             <svg
               className="w-4 h-4 text-slate-300 group-hover:text-indigo-500 group-hover:translate-x-0.5 transition-all"
@@ -212,6 +238,106 @@ function CreateBoardModal({ onClose, onCreated }) {
   );
 }
 
+// ✅ New: Invite Member modal
+function InviteMemberModal({ boardId, onClose }) {
+  const [email, setEmail]     = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState("");
+  const [success, setSuccess] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!email.trim()) { setError("Email is required."); return; }
+    setLoading(true);
+    setError("");
+    setSuccess("");
+    try {
+      const { data } = await axios.post(`/api/boards/${boardId}/invite`, {
+        email: email.trim(),
+      });
+      setSuccess(data?.message || `Invite sent to ${email.trim()}.`);
+      setEmail("");
+    } catch (err) {
+      setError(err?.response?.data?.message || "Failed to send invite.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleBackdrop(e) {
+    if (e.target === e.currentTarget) onClose();
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+      onClick={handleBackdrop}
+    >
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="h-1.5 w-full bg-indigo-600" />
+
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-lg font-semibold text-slate-800">Invite Member</h2>
+            <button
+              onClick={onClose}
+              className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                Email address <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="teammate@example.com"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              />
+            </div>
+
+            {error && (
+              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                {error}
+              </p>
+            )}
+
+            {success && (
+              <p className="text-sm text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">
+                {success}
+              </p>
+            )}
+
+            <div className="flex gap-2.5 pt-1">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex-1 px-4 py-2.5 rounded-lg text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {loading ? "Sending…" : "Send Invite"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function DashboardPage() {
   const { user } = useContext(AuthContext);
   const navigate  = useNavigate();
@@ -220,6 +346,14 @@ export default function DashboardPage() {
   const [loading,     setLoading]     = useState(true);
   const [error,       setError]       = useState("");
   const [showModal,   setShowModal]   = useState(false);
+
+  // ✅ New: shared boards state
+  const [sharedBoards,  setSharedBoards]  = useState([]);
+  const [sharedLoading, setSharedLoading] = useState(true);
+  const [sharedError,   setSharedError]   = useState("");
+
+  // ✅ New: invite modal state (holds the boardId being invited to, or null)
+  const [inviteBoardId, setInviteBoardId] = useState(null);
 
   useEffect(() => {
     async function fetchBoards() {
@@ -233,6 +367,21 @@ export default function DashboardPage() {
       }
     }
     fetchBoards();
+  }, []);
+
+  // ✅ New: fetch boards shared with the user, independent of the fetch above
+  useEffect(() => {
+    async function fetchSharedBoards() {
+      try {
+        const { data } = await axios.get("/api/boards/shared");
+        setSharedBoards(data.data);
+      } catch {
+        setSharedError("Could not load shared boards. Please try again.");
+      } finally {
+        setSharedLoading(false);
+      }
+    }
+    fetchSharedBoards();
   }, []);
 
   function handleCreated(newBoard) {
@@ -250,6 +399,12 @@ export default function DashboardPage() {
     } catch {
       alert("Failed to delete board. Please try again.");
     }
+  }
+
+  // ✅ New: open invite modal for a given board
+  function handleInviteClick(e, boardId) {
+    e.stopPropagation(); // prevent opening the board
+    setInviteBoardId(boardId);
   }
 
   const firstName = user?.name?.split(" ")[0] ?? "there";
@@ -340,7 +495,8 @@ export default function DashboardPage() {
                 key={board._id}
                 board={board}
                 onClick={() => navigate(`/board/${board._id}`)}
-                onDelete={(e) => handleDelete(e, board._id)}  // ✅ wired up
+                onDelete={(e) => handleDelete(e, board._id)}
+                onInvite={(e) => handleInviteClick(e, board._id)}  // ✅ wired up
               />
             ))}
 
@@ -360,12 +516,71 @@ export default function DashboardPage() {
             </button>
           </div>
         )}
+
+        {/* ✅ New: "Shared With Me" section */}
+        {!sharedLoading && !sharedError && sharedBoards.length > 0 && (
+          <div className="mt-12">
+            <div className="flex items-end justify-between mb-6 gap-4 flex-wrap">
+              <h2 className="text-xl font-bold text-slate-800 tracking-tight">
+                Shared With Me
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {sharedBoards.map((board) => (
+                <BoardCard
+                  key={board._id}
+                  board={board}
+                  shared
+                  onClick={() => navigate(`/board/${board._id}`)}
+                  // No delete/invite for boards you don't own
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {sharedLoading && (
+          <div className="mt-12">
+            <div className="h-6 bg-slate-200 rounded w-40 mb-6 animate-pulse" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="rounded-2xl bg-white border border-slate-200 overflow-hidden animate-pulse">
+                  <div className="h-2 bg-slate-200 w-full" />
+                  <div className="p-5 space-y-3">
+                    <div className="h-4 bg-slate-200 rounded w-3/4" />
+                    <div className="h-3 bg-slate-100 rounded w-full" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {sharedError && !sharedLoading && (
+          <div className="mt-12">
+            <h2 className="text-xl font-bold text-slate-800 tracking-tight mb-4">
+              Shared With Me
+            </h2>
+            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2 inline-block">
+              {sharedError}
+            </p>
+          </div>
+        )}
       </main>
 
       {showModal && (
         <CreateBoardModal
           onClose={() => setShowModal(false)}
           onCreated={handleCreated}
+        />
+      )}
+
+      {/* ✅ New: Invite modal */}
+      {inviteBoardId && (
+        <InviteMemberModal
+          boardId={inviteBoardId}
+          onClose={() => setInviteBoardId(null)}
         />
       )}
     </div>

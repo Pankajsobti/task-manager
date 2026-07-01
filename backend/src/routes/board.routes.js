@@ -6,6 +6,8 @@ import {
   getBoardById,
   updateBoard,
   deleteBoard,
+  inviteMember,
+  getSharedBoards,
 } from "../controllers/board.controller.js";
 
 const router = Router();
@@ -15,8 +17,10 @@ router.use(verifyToken);
 
 router.post("/", createBoard);
 router.get("/", getMyBoards);
+router.get("/shared", getSharedBoards); // must come before /:id
 router.get("/:id", getBoardById);
 router.put("/:id", updateBoard);
 router.delete("/:id", deleteBoard);
+router.post("/:boardId/invite", inviteMember);
 
 export default router;
