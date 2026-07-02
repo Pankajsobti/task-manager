@@ -141,35 +141,45 @@ export default function AnalyticsPage() {
             Tasks Completed
           </h2>
           <p className="text-xs text-gray-400 mb-6">Last 7 days</p>
-          <ResponsiveContainer width="100%" height={220}>
-            <LineChart
-              data={completedLast7Days}
-              margin={{ top: 4, right: 8, left: -20, bottom: 0 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis
-                dataKey="label"
-                tick={{ fontSize: 11, fill: "#9ca3af" }}
-                axisLine={false}
-                tickLine={false}
-              />
-              <YAxis
-                allowDecimals={false}
-                tick={{ fontSize: 11, fill: "#9ca3af" }}
-                axisLine={false}
-                tickLine={false}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Line
-                type="monotone"
-                dataKey="count"
-                stroke="#6366f1"
-                strokeWidth={2.5}
-                dot={{ r: 4, fill: "#6366f1", strokeWidth: 0 }}
-                activeDot={{ r: 6 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          {summary.total === 0 ? (
+            <div className="flex flex-col items-center justify-center h-[220px] text-gray-300">
+              <span className="text-3xl mb-2">📊</span>
+              <p className="text-sm text-gray-400">No tasks yet</p>
+              <p className="text-xs text-gray-300 mt-1">
+                Create a task to start tracking progress
+              </p>
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={220}>
+              <LineChart
+                data={completedLast7Days}
+                margin={{ top: 4, right: 8, left: -20, bottom: 0 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis
+                  dataKey="label"
+                  tick={{ fontSize: 11, fill: "#9ca3af" }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis
+                  allowDecimals={false}
+                  tick={{ fontSize: 11, fill: "#9ca3af" }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Line
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#6366f1"
+                  strokeWidth={2.5}
+                  dot={{ r: 4, fill: "#6366f1", strokeWidth: 0 }}
+                  activeDot={{ r: 6 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
         </div>
 
         {/* Pie chart – spans 1 col */}

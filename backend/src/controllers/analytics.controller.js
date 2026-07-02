@@ -13,7 +13,7 @@ export const getBoardAnalytics = async (req, res) => {
       { $group: { _id: "$status", count: { $sum: 1 } } },
     ]);
 
-    const statusMap = { todo: 0, "in-progress": 0, completed: 0 };
+    const statusMap = { todo: 0, "in-progress": 0, done: 0 };
     statusAgg.forEach(({ _id, count }) => {
       if (_id in statusMap) statusMap[_id] = count;
     });
@@ -29,7 +29,7 @@ export const getBoardAnalytics = async (req, res) => {
       {
         $match: {
           board: _id,
-          status: "completed",
+          status: "done",
           updatedAt: { $gte: sevenDaysAgo },
         },
       },
@@ -70,8 +70,8 @@ export const getBoardAnalytics = async (req, res) => {
 
     // ── 4. Overdue ─────────────────────────────────────────────────────────
     const overdueCount = await Task.countDocuments({
-      board: boardId,
-      status: { $ne: "completed" },
+      board: _id,
+      status: { $ne: "done" },
       dueDate: { $lt: new Date() },
     });
 
@@ -80,7 +80,7 @@ export const getBoardAnalytics = async (req, res) => {
       data: {
         summary: {
           total,
-          completed: statusMap["completed"],
+          completed: statusMap["done"],
           inProgress: statusMap["in-progress"],
           todo: statusMap["todo"],
           overdue: overdueCount,
