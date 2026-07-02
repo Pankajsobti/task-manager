@@ -54,11 +54,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 px-4">
       {/* Ambient glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-violet-500/10 dark:bg-violet-500/20 rounded-full blur-3xl" />
       </div>
 
       <div className="relative w-full max-w-md">
@@ -69,29 +69,29 @@ export default function LoginPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
             </svg>
           </div>
-          <span className="text-white font-semibold tracking-tight text-lg">TaskFlow</span>
+          <span className="text-slate-800 dark:text-white font-semibold tracking-tight text-lg">TaskFlow</span>
         </div>
 
         {/* Card */}
-        <div className="backdrop-blur-xl bg-white/[0.06] border border-white/[0.09] rounded-2xl shadow-2xl shadow-black/40 p-8">
+        <div className="backdrop-blur-xl bg-white dark:bg-white/[0.06] border border-slate-200 dark:border-white/[0.09] rounded-2xl shadow-2xl shadow-slate-200/50 dark:shadow-black/40 p-8">
           <div className="mb-7">
-            <h1 className="text-2xl font-semibold text-white tracking-tight">Welcome back</h1>
-            <p className="text-sm text-slate-400 mt-1">Sign in to pick up where you left off.</p>
+            <h1 className="text-2xl font-semibold text-slate-800 dark:text-white tracking-tight">Welcome back</h1>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Sign in to pick up where you left off.</p>
           </div>
 
           {apiError && (
-            <div className="mb-5 flex items-start gap-2.5 rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3">
-              <svg className="w-4 h-4 text-red-400 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="mb-5 flex items-start gap-2.5 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 px-4 py-3">
+              <svg className="w-4 h-4 text-red-500 dark:text-red-400 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
               </svg>
-              <p className="text-sm text-red-300">{apiError}</p>
+              <p className="text-sm text-red-600 dark:text-red-300">{apiError}</p>
             </div>
           )}
 
           <form onSubmit={handleSubmit} noValidate className="space-y-5">
             {/* Email */}
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5 tracking-wide uppercase">
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-300 mb-1.5 tracking-wide uppercase">
                 Email
               </label>
               <input
@@ -101,20 +101,20 @@ export default function LoginPage() {
                 onChange={handleChange}
                 placeholder="you@example.com"
                 autoComplete="email"
-                className={`w-full rounded-xl bg-white/[0.07] border px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 ${
+                className={`w-full rounded-xl bg-slate-50 dark:bg-white/[0.07] border px-4 py-2.5 text-sm text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none transition focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 ${
                   errors.email
                     ? "border-red-500/50 focus:ring-red-500/30"
-                    : "border-white/[0.08] hover:border-white/[0.14]"
+                    : "border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-white/[0.14]"
                 }`}
               />
               {errors.email && (
-                <p className="mt-1.5 text-xs text-red-400">{errors.email}</p>
+                <p className="mt-1.5 text-xs text-red-500 dark:text-red-400">{errors.email}</p>
               )}
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5 tracking-wide uppercase">
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-300 mb-1.5 tracking-wide uppercase">
                 Password
               </label>
               <input
@@ -124,14 +124,14 @@ export default function LoginPage() {
                 onChange={handleChange}
                 placeholder="••••••••"
                 autoComplete="current-password"
-                className={`w-full rounded-xl bg-white/[0.07] border px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 ${
+                className={`w-full rounded-xl bg-slate-50 dark:bg-white/[0.07] border px-4 py-2.5 text-sm text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none transition focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 ${
                   errors.password
                     ? "border-red-500/50 focus:ring-red-500/30"
-                    : "border-white/[0.08] hover:border-white/[0.14]"
+                    : "border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-white/[0.14]"
                 }`}
               />
               {errors.password && (
-                <p className="mt-1.5 text-xs text-red-400">{errors.password}</p>
+                <p className="mt-1.5 text-xs text-red-500 dark:text-red-400">{errors.password}</p>
               )}
             </div>
 
@@ -155,11 +155,11 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-slate-400">
+          <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
             Don't have an account?{" "}
             <Link
               to="/register"
-              className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
+              className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 font-medium transition-colors"
             >
               Register
             </Link>

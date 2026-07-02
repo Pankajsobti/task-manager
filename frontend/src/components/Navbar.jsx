@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
+  const { isDark, toggleTheme } = useTheme();
 
   const initials = user?.name
     ? user.name
@@ -14,7 +16,7 @@ export default function Navbar() {
     : user?.email?.[0]?.toUpperCase() ?? "?";
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2.5">
@@ -33,32 +35,52 @@ export default function Navbar() {
               />
             </svg>
           </div>
-          <span className="text-lg font-semibold tracking-tight text-slate-800">
+          <span className="text-lg font-semibold tracking-tight text-slate-800 dark:text-slate-100">
             TaskFlow
           </span>
         </div>
 
         {/* Right side */}
         <div className="flex items-center gap-3">
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            className="w-8 h-8 flex items-center justify-center rounded-md text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-150"
+          >
+            {isDark ? (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            )}
+          </button>
+
+          {/* Divider */}
+          <div className="w-px h-5 bg-slate-200 dark:bg-slate-700" />
+
           {/* Avatar + name */}
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-indigo-100 border-2 border-indigo-200 flex items-center justify-center">
-              <span className="text-xs font-bold text-indigo-700">
+            <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/50 border-2 border-indigo-200 dark:border-indigo-800 flex items-center justify-center">
+              <span className="text-xs font-bold text-indigo-700 dark:text-indigo-300">
                 {initials}
               </span>
             </div>
-            <span className="hidden sm:block text-sm font-medium text-slate-700 max-w-[140px] truncate">
+            <span className="hidden sm:block text-sm font-medium text-slate-700 dark:text-slate-300 max-w-[140px] truncate">
               {user?.name ?? user?.email ?? "User"}
             </span>
           </div>
 
           {/* Divider */}
-          <div className="w-px h-5 bg-slate-200" />
+          <div className="w-px h-5 bg-slate-200 dark:bg-slate-700" />
 
           {/* Logout */}
           <button
             onClick={logout}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors duration-150"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors duration-150"
           >
             <svg
               className="w-4 h-4"

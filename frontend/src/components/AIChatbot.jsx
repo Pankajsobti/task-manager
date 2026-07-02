@@ -140,25 +140,25 @@ export default function AIChatbot({ selectedTask }) {
       </button>
 
       <div
-        className={`fixed top-0 right-0 h-full w-[400px] max-w-full bg-gray-900 text-gray-100 shadow-2xl z-40 flex flex-col transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-[400px] max-w-full bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-2xl z-40 flex flex-col transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between px-4 py-4 border-b border-gray-800 bg-gray-950">
+        <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-sm font-semibold">
+            <div className="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-sm font-semibold text-white">
               AI
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-100">
+              <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">
                 AI Assistant
               </p>
-              <p className="text-xs text-gray-400">Always here to help</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Always here to help</p>
             </div>
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="text-gray-400 hover:text-gray-200 p-1 rounded-full hover:bg-gray-800 transition-colors"
+            className="text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             aria-label="Close chat"
           >
             <svg
@@ -177,10 +177,10 @@ export default function AIChatbot({ selectedTask }) {
         </div>
 
         {selectedTask && (
-          <div className="px-4 py-2.5 bg-indigo-950/60 border-b border-indigo-900 flex items-center gap-2">
+          <div className="px-4 py-2.5 bg-indigo-50 dark:bg-indigo-950/60 border-b border-indigo-200 dark:border-indigo-900 flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 text-indigo-400 flex-shrink-0"
+              className="h-4 w-4 text-indigo-500 dark:text-indigo-400 flex-shrink-0"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -190,9 +190,9 @@ export default function AIChatbot({ selectedTask }) {
                 clipRule="evenodd"
               />
             </svg>
-            <p className="text-xs text-indigo-200 truncate">
+            <p className="text-xs text-indigo-700 dark:text-indigo-200 truncate">
               Context:{" "}
-              <span className="font-medium text-indigo-100">
+              <span className="font-medium text-indigo-900 dark:text-indigo-100">
                 {selectedTask.title}
               </span>
             </p>
@@ -204,21 +204,21 @@ export default function AIChatbot({ selectedTask }) {
           className="flex-1 overflow-y-auto px-4 py-4 space-y-3"
         >
           {loadingHistory && (
-            <div className="flex items-center justify-center py-10 text-gray-400 text-sm">
+            <div className="flex items-center justify-center py-10 text-gray-400 dark:text-gray-400 text-sm">
               <Spinner />
               <span className="ml-2">Loading history...</span>
             </div>
           )}
 
           {!loadingHistory && error && (
-            <p className="text-xs text-red-400 text-center">{error}</p>
+            <p className="text-xs text-red-500 dark:text-red-400 text-center">{error}</p>
           )}
 
           {!loadingHistory && messages.length === 0 && !error && (
-            <div className="flex flex-col items-center justify-center h-full text-center text-gray-500 text-sm gap-2">
+            <div className="flex flex-col items-center justify-center h-full text-center text-gray-400 dark:text-gray-500 text-sm gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10 text-gray-700"
+                className="h-10 w-10 text-gray-300 dark:text-gray-700"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -231,7 +231,7 @@ export default function AIChatbot({ selectedTask }) {
                 />
               </svg>
               <p>No messages yet.</p>
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-gray-400 dark:text-gray-600">
                 Ask me anything about your tasks.
               </p>
             </div>
@@ -249,7 +249,7 @@ export default function AIChatbot({ selectedTask }) {
                   className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
                     msg.role === "user"
                       ? "bg-indigo-600 text-white rounded-br-sm"
-                      : "bg-gray-800 text-gray-100 rounded-bl-sm"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-bl-sm"
                   }`}
                 >
                   <p>{msg.content}</p>
@@ -258,7 +258,7 @@ export default function AIChatbot({ selectedTask }) {
                       className={`text-[10px] mt-1 ${
                         msg.role === "user"
                           ? "text-indigo-200"
-                          : "text-gray-500"
+                          : "text-gray-400 dark:text-gray-500"
                       }`}
                     >
                       {formatTime(msg.timestamp)}
@@ -270,17 +270,17 @@ export default function AIChatbot({ selectedTask }) {
 
           {sending && (
             <div className="flex justify-start">
-              <div className="bg-gray-800 text-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-2">
+              <div className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-2">
                 <Spinner />
-                <span className="text-xs text-gray-400">Thinking...</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400">Thinking...</span>
               </div>
             </div>
           )}
         </div>
 
-        <div className="border-t border-gray-800 bg-gray-950 px-3 py-3">
+        <div className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 px-3 py-3">
           {error && !loadingHistory && messages.length > 0 && (
-            <p className="text-[11px] text-red-400 mb-1.5 px-1">{error}</p>
+            <p className="text-[11px] text-red-500 dark:text-red-400 mb-1.5 px-1">{error}</p>
           )}
           <div className="flex items-end gap-2">
             <textarea
@@ -290,12 +290,12 @@ export default function AIChatbot({ selectedTask }) {
               onKeyDown={handleKeyDown}
               rows={1}
               placeholder="Type a message..."
-              className="flex-1 resize-none bg-gray-800 text-gray-100 placeholder-gray-500 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 max-h-28"
+              className="flex-1 resize-none bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 border border-gray-200 dark:border-transparent rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 max-h-28"
             />
             <button
               onClick={handleSend}
               disabled={sending || !input.trim()}
-              className="h-10 w-10 flex-shrink-0 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white flex items-center justify-center transition-colors"
+              className="h-10 w-10 flex-shrink-0 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed text-white flex items-center justify-center transition-colors"
               aria-label="Send message"
             >
               {sending ? (

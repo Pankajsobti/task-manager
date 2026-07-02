@@ -18,7 +18,7 @@ function BoardCard({ board, onClick, onDelete, onInvite, shared = false }) {
   return (
     <button
       onClick={onClick}
-      className="group relative w-full text-left rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+      className="group relative w-full text-left rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
     >
       {/* Color accent bar */}
       <div
@@ -28,7 +28,7 @@ function BoardCard({ board, onClick, onDelete, onInvite, shared = false }) {
 
       {/* ✅ Shared badge */}
       {shared && (
-        <span className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 text-[11px] font-semibold">
+        <span className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 text-[11px] font-semibold">
           <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-4-4" />
           </svg>
@@ -43,19 +43,19 @@ function BoardCard({ board, onClick, onDelete, onInvite, shared = false }) {
             className="w-3 h-3 rounded-full flex-shrink-0"
             style={{ backgroundColor: board.color || "#4F46E5" }}
           />
-          <h3 className="font-semibold text-slate-800 text-base truncate group-hover:text-indigo-700 transition-colors">
+          <h3 className="font-semibold text-slate-800 dark:text-slate-100 text-base truncate group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition-colors">
             {board.title}
           </h3>
         </div>
 
         {board.description && (
-          <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed">
+          <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
             {board.description}
           </p>
         )}
 
         <div className="mt-4 flex items-center justify-between">
-          <span className="text-xs text-slate-400 font-medium">Open board</span>
+          <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">Open board</span>
 
           <div className="flex items-center gap-2">
             {/* ✅ Invite button — only shown for boards you own */}
@@ -64,7 +64,7 @@ function BoardCard({ board, onClick, onDelete, onInvite, shared = false }) {
                 role="button"
                 onClick={onInvite}
                 title="Invite member"
-                className="p-1 rounded text-slate-300 hover:text-indigo-500 hover:bg-indigo-50 transition-colors"
+                className="p-1 rounded text-slate-300 dark:text-slate-500 hover:text-indigo-500 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
@@ -78,7 +78,7 @@ function BoardCard({ board, onClick, onDelete, onInvite, shared = false }) {
                 role="button"
                 onClick={onDelete}
                 title="Delete board"
-                className="p-1 rounded text-slate-300 hover:text-red-500 hover:bg-red-50 transition-colors"
+                className="p-1 rounded text-slate-300 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -87,7 +87,7 @@ function BoardCard({ board, onClick, onDelete, onInvite, shared = false }) {
             )}
 
             <svg
-              className="w-4 h-4 text-slate-300 group-hover:text-indigo-500 group-hover:translate-x-0.5 transition-all"
+              className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -137,7 +137,7 @@ function CreateBoardModal({ onClose, onCreated }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
       onClick={handleBackdrop}
     >
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div className="w-full max-w-md bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden">
         <div
           className="h-1.5 w-full transition-colors duration-200"
           style={{ backgroundColor: color }}
@@ -145,10 +145,10 @@ function CreateBoardModal({ onClose, onCreated }) {
 
         <div className="p-6">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-lg font-semibold text-slate-800">New Board</h2>
+            <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">New Board</h2>
             <button
               onClick={onClose}
-              className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -158,7 +158,7 @@ function CreateBoardModal({ onClose, onCreated }) {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                 Title <span className="text-red-500">*</span>
               </label>
               <input
@@ -167,14 +167,14 @@ function CreateBoardModal({ onClose, onCreated }) {
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Product Roadmap"
                 maxLength={80}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                 Description
-                <span className="text-slate-400 font-normal ml-1">(optional)</span>
+                <span className="text-slate-400 dark:text-slate-500 font-normal ml-1">(optional)</span>
               </label>
               <textarea
                 value={description}
@@ -182,12 +182,12 @@ function CreateBoardModal({ onClose, onCreated }) {
                 placeholder="What's this board for?"
                 rows={3}
                 maxLength={300}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition resize-none"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition resize-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 Color
               </label>
               <div className="flex gap-2.5 flex-wrap">
@@ -209,7 +209,7 @@ function CreateBoardModal({ onClose, onCreated }) {
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+              <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 rounded-lg px-3 py-2">
                 {error}
               </p>
             )}
@@ -218,7 +218,7 @@ function CreateBoardModal({ onClose, onCreated }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
               >
                 Cancel
               </button>
@@ -273,15 +273,15 @@ function InviteMemberModal({ boardId, onClose }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
       onClick={handleBackdrop}
     >
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div className="w-full max-w-md bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden">
         <div className="h-1.5 w-full bg-indigo-600" />
 
         <div className="p-6">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-lg font-semibold text-slate-800">Invite Member</h2>
+            <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">Invite Member</h2>
             <button
               onClick={onClose}
-              className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -291,7 +291,7 @@ function InviteMemberModal({ boardId, onClose }) {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                 Email address <span className="text-red-500">*</span>
               </label>
               <input
@@ -299,18 +299,18 @@ function InviteMemberModal({ boardId, onClose }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="teammate@example.com"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
               />
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+              <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 rounded-lg px-3 py-2">
                 {error}
               </p>
             )}
 
             {success && (
-              <p className="text-sm text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">
+              <p className="text-sm text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900/50 rounded-lg px-3 py-2">
                 {success}
               </p>
             )}
@@ -319,7 +319,7 @@ function InviteMemberModal({ boardId, onClose }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
               >
                 Close
               </button>
@@ -410,14 +410,14 @@ export default function DashboardPage() {
   const firstName = user?.name?.split(" ")[0] ?? "there";
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
           <div>
-            <p className="text-sm text-slate-400 font-medium mb-1">Good to see you,</p>
-            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
+            <p className="text-sm text-slate-400 dark:text-slate-500 font-medium mb-1">Good to see you,</p>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">
               {firstName}'s Boards
             </h1>
           </div>
@@ -436,12 +436,12 @@ export default function DashboardPage() {
         {loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="rounded-2xl bg-white border border-slate-200 overflow-hidden animate-pulse">
-                <div className="h-2 bg-slate-200 w-full" />
+              <div key={i} className="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden animate-pulse">
+                <div className="h-2 bg-slate-200 dark:bg-slate-700 w-full" />
                 <div className="p-5 space-y-3">
-                  <div className="h-4 bg-slate-200 rounded w-3/4" />
-                  <div className="h-3 bg-slate-100 rounded w-full" />
-                  <div className="h-3 bg-slate-100 rounded w-2/3" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-3/4" />
+                  <div className="h-3 bg-slate-100 dark:bg-slate-700/60 rounded w-full" />
+                  <div className="h-3 bg-slate-100 dark:bg-slate-700/60 rounded w-2/3" />
                 </div>
               </div>
             ))}
@@ -450,15 +450,15 @@ export default function DashboardPage() {
 
         {error && !loading && (
           <div className="flex flex-col items-center justify-center py-24 text-center">
-            <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-950/50 flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-red-500 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z" />
               </svg>
             </div>
-            <p className="text-slate-600 font-medium">{error}</p>
+            <p className="text-slate-600 dark:text-slate-300 font-medium">{error}</p>
             <button
               onClick={() => window.location.reload()}
-              className="mt-4 text-sm text-indigo-600 hover:underline"
+              className="mt-4 text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
             >
               Retry
             </button>
@@ -467,13 +467,13 @@ export default function DashboardPage() {
 
         {!loading && !error && boards.length === 0 && (
           <div className="flex flex-col items-center justify-center py-24 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-indigo-50 border-2 border-dashed border-indigo-200 flex items-center justify-center mb-5">
-              <svg className="w-8 h-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <div className="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border-2 border-dashed border-indigo-200 dark:border-indigo-800 flex items-center justify-center mb-5">
+              <svg className="w-8 h-8 text-indigo-400 dark:text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7" />
               </svg>
             </div>
-            <h2 className="text-lg font-semibold text-slate-700 mb-1">No boards yet</h2>
-            <p className="text-sm text-slate-400 mb-6 max-w-xs">
+            <h2 className="text-lg font-semibold text-slate-700 dark:text-slate-200 mb-1">No boards yet</h2>
+            <p className="text-sm text-slate-400 dark:text-slate-500 mb-6 max-w-xs">
               Create your first board to start organizing tasks across your projects.
             </p>
             <button
@@ -503,14 +503,14 @@ export default function DashboardPage() {
             {/* Ghost "add" card */}
             <button
               onClick={() => setShowModal(true)}
-              className="rounded-2xl border-2 border-dashed border-slate-300 hover:border-indigo-400 hover:bg-indigo-50/50 transition-all duration-200 flex flex-col items-center justify-center gap-2 min-h-[140px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+              className="rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/20 transition-all duration-200 flex flex-col items-center justify-center gap-2 min-h-[140px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
             >
-              <div className="w-9 h-9 rounded-full bg-slate-100 group-hover:bg-indigo-100 flex items-center justify-center transition-colors">
-                <svg className="w-5 h-5 text-slate-400 group-hover:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-950/50 flex items-center justify-center transition-colors">
+                <svg className="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
               </div>
-              <span className="text-sm font-medium text-slate-400 group-hover:text-indigo-600 transition-colors">
+              <span className="text-sm font-medium text-slate-400 dark:text-slate-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                 New board
               </span>
             </button>
@@ -521,7 +521,7 @@ export default function DashboardPage() {
         {!sharedLoading && !sharedError && sharedBoards.length > 0 && (
           <div className="mt-12">
             <div className="flex items-end justify-between mb-6 gap-4 flex-wrap">
-              <h2 className="text-xl font-bold text-slate-800 tracking-tight">
+              <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">
                 Shared With Me
               </h2>
             </div>
@@ -542,14 +542,14 @@ export default function DashboardPage() {
 
         {sharedLoading && (
           <div className="mt-12">
-            <div className="h-6 bg-slate-200 rounded w-40 mb-6 animate-pulse" />
+            <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-40 mb-6 animate-pulse" />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="rounded-2xl bg-white border border-slate-200 overflow-hidden animate-pulse">
-                  <div className="h-2 bg-slate-200 w-full" />
+                <div key={i} className="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden animate-pulse">
+                  <div className="h-2 bg-slate-200 dark:bg-slate-700 w-full" />
                   <div className="p-5 space-y-3">
-                    <div className="h-4 bg-slate-200 rounded w-3/4" />
-                    <div className="h-3 bg-slate-100 rounded w-full" />
+                    <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-3/4" />
+                    <div className="h-3 bg-slate-100 dark:bg-slate-700/60 rounded w-full" />
                   </div>
                 </div>
               ))}
@@ -559,10 +559,10 @@ export default function DashboardPage() {
 
         {sharedError && !sharedLoading && (
           <div className="mt-12">
-            <h2 className="text-xl font-bold text-slate-800 tracking-tight mb-4">
+            <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tight mb-4">
               Shared With Me
             </h2>
-            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2 inline-block">
+            <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 rounded-lg px-3 py-2 inline-block">
               {sharedError}
             </p>
           </div>

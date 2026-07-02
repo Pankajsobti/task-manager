@@ -14,9 +14,9 @@ const COLUMNS = [
 ];
 
 const PRIORITY_CONFIG = {
-  high:   { label: "High",   classes: "bg-rose-100 text-rose-700 ring-1 ring-rose-200"     },
-  medium: { label: "Med",    classes: "bg-amber-100 text-amber-700 ring-1 ring-amber-200"  },
-  low:    { label: "Low",    classes: "bg-sky-100 text-sky-700 ring-1 ring-sky-200"        },
+  high:   { label: "High",   classes: "bg-rose-100 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 ring-1 ring-rose-200 dark:ring-rose-800"     },
+  medium: { label: "Med",    classes: "bg-amber-100 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 ring-1 ring-amber-200 dark:ring-amber-800"  },
+  low:    { label: "Low",    classes: "bg-sky-100 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 ring-1 ring-sky-200 dark:ring-sky-800"        },
 };
 
 const EMPTY_FORM = { title: "", description: "", priority: "medium", dueDate: "" };
@@ -41,7 +41,7 @@ function TaskCard({ task, onDragStart, onClick, onDelete }) {
       draggable
       onDragStart={(e) => onDragStart(e, task._id)}
       onClick={() => onClick(task)}
-      className="group relative bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md
+      className="group relative bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md
                  hover:-translate-y-0.5 transition-all duration-150 cursor-grab active:cursor-grabbing
                  active:opacity-60 active:scale-95 p-3.5 select-none"
     >
@@ -49,8 +49,8 @@ function TaskCard({ task, onDragStart, onClick, onDelete }) {
       <button
         onClick={(e) => { e.stopPropagation(); onDelete(task._id); }}
         className="absolute top-2.5 right-2.5 opacity-0 group-hover:opacity-100 transition-opacity
-                   w-6 h-6 flex items-center justify-center rounded-full hover:bg-rose-50
-                   text-slate-300 hover:text-rose-400"
+                   w-6 h-6 flex items-center justify-center rounded-full hover:bg-rose-50 dark:hover:bg-rose-950/40
+                   text-slate-300 dark:text-slate-600 hover:text-rose-400 dark:hover:text-rose-400"
         aria-label="Delete task"
       >
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -59,7 +59,7 @@ function TaskCard({ task, onDragStart, onClick, onDelete }) {
       </button>
 
       {/* Title */}
-      <p className="text-sm font-medium text-slate-800 leading-snug pr-6 mb-2.5 line-clamp-2">
+      <p className="text-sm font-medium text-slate-800 dark:text-slate-100 leading-snug pr-6 mb-2.5 line-clamp-2">
         {task.title}
       </p>
 
@@ -67,7 +67,7 @@ function TaskCard({ task, onDragStart, onClick, onDelete }) {
       <div className="flex items-center gap-2 flex-wrap">
         <PriorityBadge priority={task.priority} />
         {task.dueDate && (
-          <span className={`flex items-center gap-1 text-xs ${overdue ? "text-rose-500 font-semibold" : "text-slate-400"}`}>
+          <span className={`flex items-center gap-1 text-xs ${overdue ? "text-rose-500 dark:text-rose-400 font-semibold" : "text-slate-400 dark:text-slate-500"}`}>
             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round"
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -109,7 +109,7 @@ function AddTaskForm({ columnId, boardId, onAdd, onCancel }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-xl border border-slate-200 shadow-sm p-3.5 space-y-2.5"
+      className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm p-3.5 space-y-2.5"
       onClick={(e) => e.stopPropagation()}
     >
       <input
@@ -118,24 +118,24 @@ function AddTaskForm({ columnId, boardId, onAdd, onCancel }) {
         placeholder="Task title…"
         value={form.title}
         onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-        className="w-full text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2
+        className="w-full text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-slate-800 dark:text-slate-100
                    focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent
-                   placeholder:text-slate-400"
+                   placeholder:text-slate-400 dark:placeholder:text-slate-500"
       />
       <input
         type="text"
         placeholder="Description (optional)"
         value={form.description}
         onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-        className="w-full text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2
+        className="w-full text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-slate-800 dark:text-slate-100
                    focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent
-                   placeholder:text-slate-400"
+                   placeholder:text-slate-400 dark:placeholder:text-slate-500"
       />
       <div className="flex gap-2">
         <select
           value={form.priority}
           onChange={(e) => setForm((f) => ({ ...f, priority: e.target.value }))}
-          className="flex-1 text-xs bg-slate-50 border border-slate-200 rounded-lg px-2 py-2
+          className="flex-1 text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-lg px-2 py-2
                      focus:outline-none focus:ring-2 focus:ring-violet-400"
         >
           <option value="low">Low</option>
@@ -146,12 +146,12 @@ function AddTaskForm({ columnId, boardId, onAdd, onCancel }) {
           type="date"
           value={form.dueDate}
           onChange={(e) => setForm((f) => ({ ...f, dueDate: e.target.value }))}
-          className="flex-1 text-xs bg-slate-50 border border-slate-200 rounded-lg px-2 py-2
+          className="flex-1 text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-lg px-2 py-2
                      focus:outline-none focus:ring-2 focus:ring-violet-400"
         />
       </div>
 
-      {error && <p className="text-xs text-rose-500">{error}</p>}
+      {error && <p className="text-xs text-rose-500 dark:text-rose-400">{error}</p>}
 
       <div className="flex gap-2 pt-0.5">
         <button
@@ -165,7 +165,7 @@ function AddTaskForm({ columnId, boardId, onAdd, onCancel }) {
         <button
           type="button"
           onClick={onCancel}
-          className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-semibold
+          className="flex-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 text-xs font-semibold
                      py-2 rounded-lg transition-colors"
         >
           Cancel
@@ -194,15 +194,15 @@ function Column({ col, tasks, boardId, onAddTask, onDeleteTask, onDropTask, onCa
       <div className="flex items-center justify-between mb-3 px-1">
         <div className="flex items-center gap-2">
           <span className={`w-2.5 h-2.5 rounded-full ${col.dot}`} />
-          <h2 className="text-sm font-semibold text-slate-700 tracking-wide">{col.label}</h2>
-          <span className="text-xs text-slate-400 bg-slate-100 rounded-full px-2 py-0.5 font-medium">
+          <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-200 tracking-wide">{col.label}</h2>
+          <span className="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 rounded-full px-2 py-0.5 font-medium">
             {tasks.length}
           </span>
         </div>
         <button
           onClick={() => setShowForm(true)}
-          className="w-6 h-6 flex items-center justify-center rounded-full bg-slate-100
-                     hover:bg-violet-100 text-slate-400 hover:text-violet-600 transition-colors"
+          className="w-6 h-6 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800
+                     hover:bg-violet-100 dark:hover:bg-violet-950/50 text-slate-400 dark:text-slate-500 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
           aria-label={`Add task to ${col.label}`}
         >
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -218,8 +218,8 @@ function Column({ col, tasks, boardId, onAddTask, onDeleteTask, onDropTask, onCa
         onDrop={handleDrop}
         className={`flex-1 rounded-2xl p-2.5 min-h-[480px] transition-all duration-150 space-y-2.5
                     ${isDragOver
-                      ? `bg-violet-50 ring-2 ${col.ring}`
-                      : "bg-slate-50/70"
+                      ? `bg-violet-50 dark:bg-violet-950/30 ring-2 ${col.ring}`
+                      : "bg-slate-50/70 dark:bg-slate-900/40"
                     }`}
       >
         {/* Inline add form */}
@@ -245,7 +245,7 @@ function Column({ col, tasks, boardId, onAddTask, onDeleteTask, onDropTask, onCa
 
         {/* Empty state */}
         {tasks.length === 0 && !showForm && (
-          <div className="flex flex-col items-center justify-center h-32 gap-2 text-slate-300">
+          <div className="flex flex-col items-center justify-center h-32 gap-2 text-slate-300 dark:text-slate-600">
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
               <path strokeLinecap="round" strokeLinejoin="round"
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0
@@ -376,10 +376,10 @@ export default function BoardPage() {
 
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex flex-col">
 
       {/* Top bar */}
-      <header className="sticky top-0 z-20 bg-white/80 backdrop-blur border-b border-slate-100 px-6 py-3.5">
+      <header className="sticky top-0 z-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-100 dark:border-slate-800 px-6 py-3.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
@@ -391,16 +391,16 @@ export default function BoardPage() {
               </svg>
             </div>
             <div>
-              <h1 className="text-sm font-bold text-slate-800 leading-none">Task Board</h1>
-              <p className="text-xs text-slate-400 mt-0.5 font-mono truncate max-w-xs">{boardId}</p>
+              <h1 className="text-sm font-bold text-slate-800 dark:text-slate-100 leading-none">Task Board</h1>
+              <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5 font-mono truncate max-w-xs">{boardId}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-400 hidden sm:block">{tasks.length} tasks</span>
+            <span className="text-xs text-slate-400 dark:text-slate-500 hidden sm:block">{tasks.length} tasks</span>
             <button
               onClick={() => setShowChatbot((v) => !v)}
-              className="flex items-center gap-1.5 bg-violet-50 hover:bg-violet-100 text-violet-700
+              className="flex items-center gap-1.5 bg-violet-50 dark:bg-violet-950/40 hover:bg-violet-100 dark:hover:bg-violet-950/70 text-violet-700 dark:text-violet-300
                          text-xs font-semibold px-3 py-2 rounded-lg transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -413,7 +413,7 @@ export default function BoardPage() {
                         {/* ← ADD THIS BUTTON */}
             <button
               onClick={() => navigate(`/board/${boardId}/analytics`)}
-              className="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700
+              className="flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300
                         text-xs font-semibold px-3 py-2 rounded-lg transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -432,7 +432,7 @@ export default function BoardPage() {
       <main className="flex-1 px-4 sm:px-6 py-6 max-w-7xl mx-auto w-full">
 
         {loading && (
-          <div className="flex items-center justify-center h-64 gap-3 text-slate-400">
+          <div className="flex items-center justify-center h-64 gap-3 text-slate-400 dark:text-slate-500">
             <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
@@ -443,11 +443,11 @@ export default function BoardPage() {
 
         {error && !loading && (
           <div className="flex items-center justify-center h-64">
-            <div className="bg-rose-50 border border-rose-100 rounded-xl px-6 py-4 text-center max-w-sm">
-              <p className="text-sm text-rose-600 font-medium">{error}</p>
+            <div className="bg-rose-50 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/50 rounded-xl px-6 py-4 text-center max-w-sm">
+              <p className="text-sm text-rose-600 dark:text-rose-400 font-medium">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="mt-3 text-xs text-rose-500 underline underline-offset-2"
+                className="mt-3 text-xs text-rose-500 dark:text-rose-400 underline underline-offset-2"
               >
                 Refresh page
               </button>

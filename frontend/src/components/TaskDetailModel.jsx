@@ -133,9 +133,9 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
   };
 
   const priorityColors = {
-    low: "bg-green-100 text-green-700 border-green-300",
-    medium: "bg-yellow-100 text-yellow-700 border-yellow-300",
-    high: "bg-red-100 text-red-700 border-red-300",
+    low: "bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-300 border-green-300 dark:border-green-800",
+    medium: "bg-yellow-100 dark:bg-yellow-950/40 text-yellow-700 dark:text-yellow-300 border-yellow-300 dark:border-yellow-800",
+    high: "bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-300 border-red-300 dark:border-red-800",
   };
 
   if (!task) return null;
@@ -147,14 +147,14 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
         onClick={onClose}
       />
 
-      <div className="relative bg-white w-full max-w-2xl max-h-[90vh] rounded-xl shadow-2xl flex flex-col overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-800">
+      <div className="relative bg-white dark:bg-slate-800 w-full max-w-2xl max-h-[90vh] rounded-xl shadow-2xl flex flex-col overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-slate-700">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-slate-100">
             Task Details
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors rounded-full p-1 hover:bg-gray-100"
+            className="text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 transition-colors rounded-full p-1 hover:bg-gray-100 dark:hover:bg-slate-700"
             aria-label="Close"
           >
             <svg
@@ -172,13 +172,13 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
           </button>
         </div>
 
-        <div className="flex border-b border-gray-200 px-6">
+        <div className="flex border-b border-gray-200 dark:border-slate-700 px-6">
           <button
             onClick={() => setActiveTab("details")}
             className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
               activeTab === "details"
-                ? "border-indigo-600 text-indigo-600"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                ? "border-indigo-600 text-indigo-600 dark:text-indigo-400"
+                : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200"
             }`}
           >
             Details
@@ -187,8 +187,8 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
             onClick={() => setActiveTab("history")}
             className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
               activeTab === "history"
-                ? "border-indigo-600 text-indigo-600"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                ? "border-indigo-600 text-indigo-600 dark:text-indigo-400"
+                : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200"
             }`}
           >
             History
@@ -199,27 +199,27 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
           {activeTab === "details" && (
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
                   Title
                 </label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="Task title"
                 />
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">
                     Description
                   </label>
                   <button
                     onClick={handleImproveDescription}
                     disabled={improving}
-                    className="text-xs font-medium px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                    className="text-xs font-medium px-2.5 py-1 rounded-md bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-950/70 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
                   >
                     {improving ? (
                       <>
@@ -235,19 +235,19 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={4}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"
+                  className="w-full rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"
                   placeholder="Task description"
                 />
                 {improveError && (
-                  <p className="text-xs text-red-500 mt-1">{improveError}</p>
+                  <p className="text-xs text-red-500 dark:text-red-400 mt-1">{improveError}</p>
                 )}
 
                 {improvedText && (
-                  <div className="mt-2 border border-indigo-200 bg-indigo-50/60 rounded-lg p-3">
-                    <p className="text-xs font-semibold text-indigo-700 mb-1">
+                  <div className="mt-2 border border-indigo-200 dark:border-indigo-900/60 bg-indigo-50/60 dark:bg-indigo-950/30 rounded-lg p-3">
+                    <p className="text-xs font-semibold text-indigo-700 dark:text-indigo-300 mb-1">
                       Suggested improvement
                     </p>
-                    <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                    <p className="text-sm text-gray-700 dark:text-slate-300 whitespace-pre-wrap">
                       {improvedText}
                     </p>
                     <div className="flex gap-2 mt-2">
@@ -259,7 +259,7 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
                       </button>
                       <button
                         onClick={() => setImprovedText("")}
-                        className="text-xs font-medium px-3 py-1.5 rounded-md bg-white border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors"
+                        className="text-xs font-medium px-3 py-1.5 rounded-md bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
                       >
                         Dismiss
                       </button>
@@ -270,14 +270,14 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
                     Priority
                   </label>
                   <select
                     value={priority}
                     onChange={(e) => setPriority(e.target.value)}
                     className={`w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                      priorityColors[priority] || "border-gray-300"
+                      priorityColors[priority] || "border-gray-300 dark:border-slate-600"
                     }`}
                   >
                     <option value="low">Low</option>
@@ -287,27 +287,27 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
                     Due Date
                   </label>
                   <input
                     type="date"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </div>
               </div>
 
-              <div className="border-t border-gray-100 pt-4">
+              <div className="border-t border-gray-100 dark:border-slate-700 pt-4">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-sm font-medium text-gray-700">
+                  <h3 className="text-sm font-medium text-gray-700 dark:text-slate-300">
                     AI Subtask Breakdown
                   </h3>
                   <button
                     onClick={handleSuggestBreakdown}
                     disabled={breakingDown}
-                    className="text-xs font-medium px-2.5 py-1 rounded-md bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                    className="text-xs font-medium px-2.5 py-1 rounded-md bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-950/70 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
                   >
                     {breakingDown ? (
                       <>
@@ -321,15 +321,15 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
                 </div>
 
                 {breakdownError && (
-                  <p className="text-xs text-red-500 mb-1">
+                  <p className="text-xs text-red-500 dark:text-red-400 mb-1">
                     {breakdownError}
                   </p>
                 )}
 
                 {subtasks.length > 0 && (
-                  <ol className="list-decimal list-inside space-y-1.5 bg-purple-50/60 border border-purple-200 rounded-lg p-3">
+                  <ol className="list-decimal list-inside space-y-1.5 bg-purple-50/60 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-900/50 rounded-lg p-3">
                     {subtasks.map((st, idx) => (
-                      <li key={idx} className="text-sm text-gray-700">
+                      <li key={idx} className="text-sm text-gray-700 dark:text-slate-300">
                         {typeof st === "string" ? st : st?.title || ""}
                       </li>
                     ))}
@@ -338,7 +338,7 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
               </div>
 
               {saveError && (
-                <p className="text-sm text-red-500">{saveError}</p>
+                <p className="text-sm text-red-500 dark:text-red-400">{saveError}</p>
               )}
             </div>
           )}
@@ -346,18 +346,18 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
           {activeTab === "history" && (
             <div>
               {historyLoading && (
-                <div className="flex items-center justify-center py-10 text-gray-400 text-sm">
+                <div className="flex items-center justify-center py-10 text-gray-400 dark:text-slate-500 text-sm">
                   <Spinner />
                   <span className="ml-2">Loading history...</span>
                 </div>
               )}
 
               {!historyLoading && historyError && (
-                <p className="text-sm text-red-500">{historyError}</p>
+                <p className="text-sm text-red-500 dark:text-red-400">{historyError}</p>
               )}
 
               {!historyLoading && !historyError && history.length === 0 && (
-                <p className="text-sm text-gray-400 text-center py-10">
+                <p className="text-sm text-gray-400 dark:text-slate-500 text-center py-10">
                   No history available for this task.
                 </p>
               )}
@@ -367,26 +367,26 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
                   {history.map((entry, idx) => (
                     <li
                       key={idx}
-                      className="border border-gray-200 rounded-lg p-3 text-sm"
+                      className="border border-gray-200 dark:border-slate-700 rounded-lg p-3 text-sm"
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-medium text-gray-800 capitalize">
+                        <span className="font-medium text-gray-800 dark:text-slate-200 capitalize">
                           {entry.changeType}
                         </span>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-gray-400 dark:text-slate-500">
                           {formatTimestamp(entry.timestamp)}
                         </span>
                       </div>
-                      <div className="text-gray-600">
-                        <span className="line-through text-gray-400 mr-2">
+                      <div className="text-gray-600 dark:text-slate-400">
+                        <span className="line-through text-gray-400 dark:text-slate-500 mr-2">
                           {String(entry.oldValue ?? "—")}
                         </span>
-                        <span className="text-gray-700">
+                        <span className="text-gray-700 dark:text-slate-300">
                           → {String(entry.newValue ?? "—")}
                         </span>
                       </div>
                       {entry.changedBy && (
-                        <p className="text-xs text-gray-400 mt-1">
+                        <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">
                           by {entry.changedBy}
                         </p>
                       )}
@@ -399,10 +399,10 @@ export default function TaskDetailModal({ task, onClose, onUpdate }) {
         </div>
 
         {activeTab === "details" && (
-          <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">
+          <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900">
             <button
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+              className="px-4 py-2 text-sm font-medium rounded-lg text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
             >
               Cancel
             </button>
