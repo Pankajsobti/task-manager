@@ -97,7 +97,7 @@ function AddTaskForm({ columnId, boardId, onAdd, onCancel }) {
         status: columnId,
         board:boardId,
       });
-      onAdd(data.data);
+      onAdd();
       setForm(EMPTY_FORM);
     } catch {
       setError("Failed to create task. Try again.");
@@ -227,7 +227,7 @@ function Column({ col, tasks, boardId, onAddTask, onDeleteTask, onDropTask, onCa
           <AddTaskForm
             columnId={col.id}
             boardId={boardId}
-            onAdd={(task) => { onAddTask(task); setShowForm(false); }}
+            onAdd={() => setShowForm(false)}
             onCancel={() => setShowForm(false)}
           />
         )}
@@ -331,9 +331,7 @@ export default function BoardPage() {
   }, [boardId]);
 
   // Add task (from inline form callback)
-  const handleAddTask = useCallback((newTask) => {
-    setTasks((prev) => [...prev, newTask]);
-  }, []);
+
 
   // Delete task
   const handleDeleteTask = useCallback(async (taskId) => {
@@ -463,7 +461,7 @@ export default function BoardPage() {
                 col={col}
                 tasks={tasksByStatus(col.id)}
                 boardId={boardId}
-                onAddTask={handleAddTask}
+                
                 onDeleteTask={handleDeleteTask}
                 onDropTask={handleDropTask}
                 onCardClick={setSelectedTask}
